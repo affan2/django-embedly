@@ -50,15 +50,15 @@ def embed_replace(match, maxwidth=None):
 #                defaults={'type': oembed.type})
 
     if oembed.type == 'photo':
-        html = '<img src="%s" width="%s" height="%s" />' % (oembed.url,
-                oembed.width, oembed.height)
+        html = '<img src="%s" width="%s" />' % (oembed['url'],
+                oembed['width'])
     else:
-        html = oembed.html
+        html = oembed['html']
 
-    if html:
-        row.html = html
-        row.last_updated = datetime.now()
-        row.save()
+    #if html:
+        #row.html = html
+        #row.last_updated = datetime.now()
+        #row.save()
 
     # set cache
     cache.set(key, html, 86400)
