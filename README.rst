@@ -9,7 +9,9 @@ scenario.
 Installation
 ------------
 
-Install requirements: pip install -r requirements.txt
+Install: 
+
+pip install -e git://github.com/jskopek/django-embedly#egg=django-embeds
 
 Add 'embeds' to INSTALLED_APPS in settings.py.
 
@@ -38,3 +40,10 @@ width of 400px::
     {% load embed_filters %}
 
     {{ my_text|embedly:"400" }}
+
+
+If you wish to use the built-in stylesheet, include it as well::
+
+    <link type="css/css" rel="stylesheet" href="{{ STATIC_URL }}embeds/embeds.css"/>
+
+
