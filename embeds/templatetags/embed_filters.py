@@ -46,8 +46,8 @@ def embed_replace(match, maxwidth=None):
 #            return 'Error embedding %s' % url
 
     # save result to database
-    row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth,
-                defaults={'type': oembed.type})
+#    row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth,
+#                defaults={'type': oembed.type})
 
     if oembed.type == 'photo':
         html = '<img src="%s" width="%s" height="%s" />' % (oembed.url,
