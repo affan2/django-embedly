@@ -37,13 +37,13 @@ def embed_replace(match, maxwidth=None):
         oembed = client.oembed(url)
 
     # check database
-    if oembed.error:
-        try:
-            html = SavedEmbed.objects.get(url=url, maxwidth=maxwidth).html
-            cache.set(key, html)
-            return html
-        except SavedEmbed.DoesNotExist:
-            return 'Error embedding %s' % url
+#    if oembed.error:
+#        try:
+#            html = SavedEmbed.objects.get(url=url, maxwidth=maxwidth).html
+#            cache.set(key, html)
+#            return html
+#        except SavedEmbed.DoesNotExist:
+#            return 'Error embedding %s' % url
 
     # save result to database
     row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth,
