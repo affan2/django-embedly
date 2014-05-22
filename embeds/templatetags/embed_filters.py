@@ -8,6 +8,8 @@ from django.conf import settings
 
 from embedly import Embedly
 from embeds.models import SavedEmbed
+from django.utils.safestring import mark_safe
+
 
 register = template.Library()
 
@@ -17,7 +19,7 @@ USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; ' \
 
 @register.filter
 def embedly(html, arg=None):
-    return EMBED_REGEX.sub(lambda x: embed_replace(x, maxwidth=arg), html)
+    return mark_safe(EMBED_REGEX.sub(lambda x: embed_replace(x, maxwidth=arg), html))
 
 
 def embed_replace(match, maxwidth=None):
