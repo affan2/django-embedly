@@ -9,13 +9,14 @@ from django.conf import settings
 from embedly import Embedly
 from embeds.models import SavedEmbed
 from django.utils.safestring import mark_safe
+import string
 
 
 register = template.Library()
 
 EMBED_REGEX = re.compile(r'https?://[\w\d:#@%/;$()~_?\+\-=\\\.&]+', re.I)
 USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; ' \
-        '+http://github.com/BayCitizen/)'
+        '+http://github.com/jskopek/)'
 
 @register.filter
 def embedly(html, arg=None):
@@ -52,15 +53,28 @@ def embed_replace(match, maxwidth=None):
 #                defaults={'type': oembed.type})
 
     if oembed['type'] == 'photo':
-        html = '<img src="%s" width="%s" />' % (oembed['url'],
-                oembed['width'])
+        template = """
+        <div class="embeds"><img src="${url}"" /></div>
+        """
     elif oembed['type'] == 'link':
-        html = '<a href="%s"><img src="%s" />%s - %s</a><span>%s</span>' % (oembed['url'],
-                oembed['thumbnail_url'], oembed['title'], oembed['provider_url'], oembed['description'])
+        template = """
+        <div class="embeds">
+            <a href="${url}">
+            <img class="embeds-thumbnail" src="${thumbnail_url}" />
+            <div class="embeds-text">
+                <span class="embeds-title">${title}</span>
+                <p class="embeds-description">${description}</p>
+                <span class="embeds-source">Read the article on ${provider_url}</span>
+            </div>
+            </a>
+        </div>"""
     elif oembed.get('html'):
-        html = oembed['html']
+        template = """<div class="embeds">${html}</div>"""
     else:
+        template = """<a href="${url}">${url}</a>"""
         html = url
+
+    html = string.Template(template).substitute(oembed)
 
     #if html:
         #row.html = html
