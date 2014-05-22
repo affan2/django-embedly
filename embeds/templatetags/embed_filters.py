@@ -11,7 +11,7 @@ from embeds.models import SavedEmbed
 
 register = template.Library()
 
-EMBED_REGEX = re.compile(r'embed:\s*(https?://[\w\d:#@%/;$()~_?\+\-=\\\.&]+)', re.I)
+EMBED_REGEX = re.compile(r'https?://[\w\d:#@%/;$()~_?\+\-=\\\.&]+', re.I)
 USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; ' \
         '+http://github.com/BayCitizen/)'
 
@@ -21,7 +21,7 @@ def embedly(html, arg=None):
 
 
 def embed_replace(match, maxwidth=None):
-    url = match.group(1)
+    url = match.group(0)
 
     key = make_cache_key(url, maxwidth)
     cached_html = cache.get(key)
