@@ -49,11 +49,16 @@ def embed_replace(match, maxwidth=None):
 #    row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth,
 #                defaults={'type': oembed.type})
 
-    if oembed.type == 'photo':
+    if oembed['type'] == 'photo':
         html = '<img src="%s" width="%s" />' % (oembed['url'],
                 oembed['width'])
-    else:
+    elif oembed['type'] == 'link':
+        html = '<a href="%s"><img src="%s" />%s - %s</a><span>%s</span>' % (oembed['url'],
+                oembed['thumbnail_url'], oembed['title'], oembed['provider_url'], oembed['description'])
+    elif oembed.get('html'):
         html = oembed['html']
+    else:
+        html = url
 
     #if html:
         #row.html = html
@@ -61,7 +66,7 @@ def embed_replace(match, maxwidth=None):
         #row.save()
 
     # set cache
-    cache.set(key, html, 86400)
+    #cache.set(key, html, 86400)
     return html
 
 
