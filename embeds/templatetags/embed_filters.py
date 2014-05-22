@@ -48,10 +48,6 @@ def embed_replace(match, maxwidth=None):
         except SavedEmbed.DoesNotExist:
             return 'Error embedding %s' % url
 
-    # save result to database
-#    row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth,
-#                defaults={'type': oembed.type})
-
     if oembed['type'] == 'photo':
         template = """
         <div class="embeds"><img src="${url}"" /></div>
@@ -76,13 +72,18 @@ def embed_replace(match, maxwidth=None):
 
     html = string.Template(template).substitute(oembed)
 
-    #if html:
-        #row.html = html
-        #row.last_updated = datetime.now()
-        #row.save()
+    # save result to database
+    row, created = SavedEmbed.objects.get_or_create(url=url, maxwidth=maxwidth, defaults={
+        'type': oembed['type'],
+        'html': html
+    })
+
+    if not created:
+        row.save()
 
     # set cache
-    #cache.set(key, html, 86400)
+    cache.set(key, html, 86400)
+
     return html
 
 
