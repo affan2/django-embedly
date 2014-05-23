@@ -47,3 +47,7 @@ If you wish to use the built-in stylesheet, include it as well::
     <link type="css/css" rel="stylesheet" href="{{ STATIC_URL }}embeds/embeds.css"/>
 
 
+You may also use the provided util method to find all list of all embeddable content in a block of text::
+
+    from embeds.utils import detect_embedded_content
+    embed_list = detect_embedded_content("Some text with http://www.links.com and http://www.morelinks.com")
