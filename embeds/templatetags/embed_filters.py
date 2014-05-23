@@ -4,41 +4,20 @@ from hashlib import md5
 
 from django import template
 from django.core.cache import cache
-from django.conf import settings
 
+import embeds
 from embedly import Embedly
 from embeds.models import SavedEmbed
 from django.utils.safestring import mark_safe
 import string
-import logging
 
 
 register = template.Library()
 
-logger = logging.getLogger(__name__)
-
-# Settings
-EMBED_REGEX = re.compile(r'https?://[\w\d:#@%/;$()~_?\+\-=\\\.&]+', re.I)
-
-try:
-    USER_AGENT = settings.EMBEDLY_USER_AGENT
-except AttributeError:
-    USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; +http://github.com/jskopek/)'
-
-try:
-    DEFAULT_THUMBNAIL = settings.EMBEDLY_DEFAULT_THUMBNAIL
-except AttributeError:
-    DEFAULT_THUMBNAIL = ''
-
-try:
-    EMBEDLY_KEY = settings.EMBEDLY_KEY
-except AttributeError:
-    EMBEDLY_KEY = ''
-    logger.error('`EMBEDLY_KEY` property not found in Django Settings')
 
 @register.filter
 def embedly(html, arg=None):
-    return mark_safe(EMBED_REGEX.sub(lambda x: embed_replace(x, maxwidth=arg), html))
+    return mark_safe(embeds.EMBED_REGEX.sub(lambda x: embed_replace(x, maxwidth=arg), html))
 
 
 def embed_replace(match, maxwidth=None):
@@ -51,7 +30,7 @@ def embed_replace(match, maxwidth=None):
         return cached_html
 
     # call embedly API
-    client = Embedly(key=EMBEDLY_KEY, user_agent=USER_AGENT)
+    client = Embedly(key=embeds.EMBEDLY_KEY, user_agent=embeds.USER_AGENT)
     if maxwidth:
         oembed = client.oembed(url, maxwidth=maxwidth)
     else:
@@ -92,7 +71,7 @@ def embed_replace(match, maxwidth=None):
     data = {
         'title': '',
         'url': '',
-        'thumbnail_url': DEFAULT_THUMBNAIL,
+        'thumbnail_url': embeds.DEFAULT_THUMBNAIL,
         'description': '',
         'provider_url': '?'
     }
