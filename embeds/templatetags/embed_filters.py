@@ -88,13 +88,15 @@ def embed_replace(match, maxwidth=None):
         template = """<a href="${url}">${url}</a>"""
         html = url
 
+    # Set up defaults and populate with data
     data = {
         'title': '',
         'url': '',
         'thumbnail_url': DEFAULT_THUMBNAIL,
         'description': '',
         'provider_url': '?'
-    }.update(oembed)
+    }
+    data.update(oembed)
 
     html = string.Template(template).substitute(data)
 
