@@ -5,6 +5,11 @@
     border: 1px solid #ccc;
     border-left: 8px solid rgb(0,102,157);
 }
+.embeds:after {
+    content: '';
+    display: block;
+    clear: both;
+}
 .embeds-thumbnail {
     float: left;
     width: 165px;
