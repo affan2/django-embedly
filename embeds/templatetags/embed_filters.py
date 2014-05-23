@@ -90,9 +90,9 @@ def embed_replace(match, maxwidth=None):
 
     data = {
         'title': '',
-        'url': ''
+        'url': '',
         'thumbnail_url': DEFAULT_THUMBNAIL,
-        'description': ''
+        'description': '',
         'provider_url': '?'
     }.update(oembed)
 
