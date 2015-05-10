@@ -6,7 +6,7 @@ EMBED_REGEX = re.compile(r'https?://[\w\d:#@%/;$()~_?\+\-=\\\.&]+', re.I)
 try:
     USER_AGENT = settings.EMBEDLY_USER_AGENT
 except AttributeError:
-    USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; +http://github.com/jskopek/)'
+    USER_AGENT = 'Mozilla/5.0 (compatible; django-embedly/0.2; +http://github.com/affan2/)'
 
 try:
     DEFAULT_THUMBNAIL = settings.EMBEDLY_DEFAULT_THUMBNAIL
