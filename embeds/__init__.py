@@ -22,4 +22,9 @@ except AttributeError:
     logger = logging.getLogger(__name__)
     logger.error('`EMBEDLY_KEY` property not found in Django Settings')
 
+try:
+    CACHE_TIMEOUT = settings.EMBEDLY_CACHE_TIMEOUT
+except AttributeError:
+    CACHE_TIMEOUT = 60 * 60 * 24
+
 

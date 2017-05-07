@@ -4,6 +4,7 @@ from hashlib import md5
 
 from django import template
 from django.core.cache import cache
+from django.utils import timezone
 
 import embeds
 from embedly import Embedly
@@ -11,6 +12,7 @@ from embeds.models import SavedEmbed
 from django.utils.safestring import mark_safe
 import string
 
+now = timezone.now
 
 register = template.Library()
 
@@ -29,6 +31,14 @@ def embed_replace(match, maxwidth=None):
     if cached_html:
         return cached_html
 
+    # check database
+    try:
+        html = SavedEmbed.objects.get(url=url, maxwidth=maxwidth, last_updated__gt=now() - datetime.timedelta(30)).html
+        cache.set(key, html, embeds.CACHE_TIMEOUT)
+        return html
+    except SavedEmbed.DoesNotExist:
+        pass
+
     # call embedly API
     client = Embedly(key=embeds.EMBEDLY_KEY, user_agent=embeds.USER_AGENT)
     if maxwidth:
@@ -36,14 +46,8 @@ def embed_replace(match, maxwidth=None):
     else:
         oembed = client.oembed(url)
 
-    # check database
     if oembed.get('error'):
-        try:
-            html = SavedEmbed.objects.get(url=url, maxwidth=maxwidth).html
-            cache.set(key, html)
-            return html
-        except SavedEmbed.DoesNotExist:
-            return 'Error embedding %s' % url
+        return 'Error embedding %s' % url
 
     if oembed['type'] == 'photo':
         template = """
@@ -89,7 +93,7 @@ def embed_replace(match, maxwidth=None):
         row.save()
 
     # set cache
-    cache.set(key, html, 86400)
+    cache.set(key, html, embeds.CACHE_TIMEOUT)
 
     return html
 
