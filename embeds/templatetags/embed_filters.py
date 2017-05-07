@@ -33,7 +33,11 @@ def embed_replace(match, maxwidth=None):
 
     # check database
     try:
-        html = SavedEmbed.objects.get(url=url, maxwidth=maxwidth, last_updated__gt=now() - datetime.timedelta(30)).html
+        html = SavedEmbed.objects.get(
+            url=url,
+            maxwidth=maxwidth,
+            last_updated__gt=now() - datetime.timedelta(seconds=embeds.CACHE_TIMEOUT)
+        ).html
         cache.set(key, html, embeds.CACHE_TIMEOUT)
         return html
     except SavedEmbed.DoesNotExist:
