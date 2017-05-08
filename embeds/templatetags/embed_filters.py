@@ -1,5 +1,4 @@
-import re
-from datetime import datetime
+import datetime
 from hashlib import md5
 
 from django import template
