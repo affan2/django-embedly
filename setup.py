@@ -11,9 +11,9 @@ setup(
         'embeds',
     ],
 
-    install_requires=[
-        'distribute',
-    ],
+    # install_requires=[
+    #     'distribute',
+    # ],
 
     classifiers=[
         'Development Status :: 3 - Alpha',
