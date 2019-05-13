@@ -1,11 +1,13 @@
 from django.db import models
 
+
 OEMBED_TYPES = (
     ('video',)*2,
     ('photo',)*2,
     ('link',)*2,
     ('rich',)*2,
 )
+
 
 class SavedEmbed(models.Model):
     url = models.URLField(max_length=2000)

@@ -22,14 +22,12 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'SavedEmbed', fields ['url', 'maxwidth']
         db.create_unique(u'embeds_savedembed', ['url', 'maxwidth'])
 
-
     def backwards(self, orm):
         # Removing unique constraint on 'SavedEmbed', fields ['url', 'maxwidth']
         db.delete_unique(u'embeds_savedembed', ['url', 'maxwidth'])
 
         # Deleting model 'SavedEmbed'
         db.delete_table(u'embeds_savedembed')
-
 
     models = {
         u'embeds.savedembed': {
