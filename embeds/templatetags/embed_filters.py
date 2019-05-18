@@ -102,5 +102,5 @@ def embed_replace(match, maxwidth=None):
 
 
 def make_cache_key(url, maxwidth=None):
-    md5_hash = md5(url).hexdigest()
+    md5_hash = md5(url.encode('utf-8')).hexdigest()
     return "embeds.%s.%s" % (maxwidth if maxwidth else 'default', md5_hash)
