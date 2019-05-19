@@ -19,6 +19,6 @@ class SavedEmbed(models.Model):
     class Meta:
         unique_together = ('url', 'maxwidth')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.url
 
