@@ -51,3 +51,4 @@ You may also use the provided util method to find all list of all embeddable con
 
     from embeds.utils import detect_embedded_content
     embed_list = detect_embedded_content("Some text with http://www.links.com and http://www.morelinks.com")
+
