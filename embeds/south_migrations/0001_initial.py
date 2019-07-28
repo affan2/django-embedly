@@ -9,31 +9,31 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'SavedEmbed'
-        db.create_table(u'embeds_savedembed', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table('embeds_savedembed', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('maxwidth', self.gf('django.db.models.fields.SmallIntegerField')(null=True, blank=True)),
             ('type', self.gf('django.db.models.fields.CharField')(max_length=10)),
             ('html', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('last_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
-        db.send_create_signal(u'embeds', ['SavedEmbed'])
+        db.send_create_signal('embeds', ['SavedEmbed'])
 
         # Adding unique constraint on 'SavedEmbed', fields ['url', 'maxwidth']
-        db.create_unique(u'embeds_savedembed', ['url', 'maxwidth'])
+        db.create_unique('embeds_savedembed', ['url', 'maxwidth'])
 
     def backwards(self, orm):
         # Removing unique constraint on 'SavedEmbed', fields ['url', 'maxwidth']
-        db.delete_unique(u'embeds_savedembed', ['url', 'maxwidth'])
+        db.delete_unique('embeds_savedembed', ['url', 'maxwidth'])
 
         # Deleting model 'SavedEmbed'
-        db.delete_table(u'embeds_savedembed')
+        db.delete_table('embeds_savedembed')
 
     models = {
-        u'embeds.savedembed': {
+        'embeds.savedembed': {
             'Meta': {'unique_together': "(('url', 'maxwidth'),)", 'object_name': 'SavedEmbed'},
             'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'maxwidth': ('django.db.models.fields.SmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
