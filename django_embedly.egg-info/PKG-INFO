@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: django-embedly
+Version: 0.2
+Summary: Provides a template filter to parse embed URLs and talk to embedly API
+Home-page: http://github.com/BayCitizen/django-embedly/
+Author: Bay Citizen
+Author-email: info@baycitizen.org
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python

@@ -1,0 +1,11 @@
+README.rst
+setup.py
+django_embedly.egg-info/PKG-INFO
+django_embedly.egg-info/SOURCES.txt
+django_embedly.egg-info/dependency_links.txt
+django_embedly.egg-info/top_level.txt
+embeds/__init__.py
+embeds/admin.py
+embeds/models.py
+embeds/tests.py
+embeds/utils.py
